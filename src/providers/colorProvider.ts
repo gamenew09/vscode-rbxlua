@@ -3,6 +3,91 @@ import { RbxGlobalItem } from '../robloxglobalsprovider';
 import { symbolizeGlobal, getFunctionNameAtPosition, getFunctionArgumentNumber } from '../utils';
 import { RobloxReflectionApi, RbxReflection } from '../robloxapihelper';
 
+/*
+    The HSV helper functions were derived from: https://github.com/EmmanuelOga/columns/blob/master/utils/color.lua and http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
+*/
+
+// 0-1
+function rgbToHSV(r: number, g: number, b: number)
+{
+    let max = Math.max(r, g, b);
+    let min = Math.min(r, g, b);
+
+    let d = max - min;
+
+    let h = max;
+    let s = max;
+    let v = max;
+
+    s = max == 0 ? 0 : d / max;
+
+    if(max == min) {
+        h = 0;
+    }
+    else {
+        switch(max) {
+            case r:
+                h = (g - b) / d + (g < b ? 6 : 0);
+                break;
+            case g:
+                h = (b - r) / d + 2;
+                break;
+            case b:
+                h = (r - g) / d + 4;
+                break;
+        }
+
+        h /= 6;
+    }
+
+    return [h, s, v];
+}
+
+function hsvToRGBFloat(h, s, v) {
+    let r, g, b;
+
+    let i = Math.floor(h * 6);
+    let f = h * 6 - i;
+    let p = v * (1 - s);
+    let q = v * (1 - f * s);
+    let t = v * (1 - (1 - f) * s);
+
+    switch(i % 6) {
+        case 0: 
+            r = v;
+            g = t;
+            b = p;
+            break;
+        case 1:
+            r = q;
+            g = v;
+            b = p; 
+            break;
+        case 2: 
+            r = p;
+            g = v;
+            b = t; 
+            break;
+        case 3: 
+            r = p;
+            g = q;
+            b = v; 
+            break;
+        case 4: 
+            r = t;
+            g = p;
+            b = v; 
+            break;
+        case 5: 
+            r = v;
+            g = p;
+            b = q; 
+            break;
+    }
+
+    return [r, g, b];
+}
+
 export class RbxLuaColorProvider implements vscode.DocumentColorProvider {
     public provideDocumentColors(document: vscode.TextDocument, token: vscode.CancellationToken): Thenable<vscode.ColorInformation[]> {
         return new Promise((resolve, reject) => {
@@ -36,9 +121,11 @@ export class RbxLuaColorProvider implements vscode.DocumentColorProvider {
                                     });
                                     break;
                                 case "fromHSV":
-                                    colorNums = args.map((str) => {
-                                        return parseFloat(str); // TODO: Convert HSV
+                                    let hsv = args.map((str) => {
+                                        return parseFloat(str);
                                     });
+
+                                    colorNums = hsvToRGBFloat(hsv[0], hsv[1], hsv[2]);
                                     break;
                                 case "fromRGB":
                                     colorNums = args.map((str) => {
@@ -87,7 +174,8 @@ export class RbxLuaColorProvider implements vscode.DocumentColorProvider {
                         colorStr = color.red.toFixed(3) + ", " + color.green.toFixed(3) + ", " + color.blue.toFixed(3);
                         break;
                     case "fromHSV":
-                        colorStr = color.red.toFixed(5) + ", " + color.green.toFixed(5) + ", " + color.blue.toFixed(5);
+                        let hsv = rgbToHSV(color.red, color.green, color.blue);
+                        colorStr = hsv[0].toFixed(3) + ", " + hsv[1].toFixed(3) + ", " + hsv[2].toFixed(3);
                         break;
                     case "fromRGB":
                         colorStr = color.red * 255 + ", " + color.green * 255 + ", " + color.blue * 255;
