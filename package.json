@@ -41,6 +41,7 @@
             ]
         },
         "hoverProvider": true,
+        "colorProvider": true,
         "grammars": [
             {
                 "language": "rbxlua",

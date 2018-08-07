@@ -10,6 +10,7 @@ import { RbxGlobalItem } from './robloxglobalsprovider';
 import { RbxLuaCompletionItemProvider } from './providers/autoComplete';
 import { RbxLuaHoverProvider } from './providers/hover';
 import { RbxLuaSignatureHelpProvider } from './providers/signatureHelper';
+import { RbxLuaColorProvider } from './providers/colorProvider';
 
 // The selector used for the language providers.
 const RBXLUA_SELECTOR: vscode.DocumentSelector = "rbxlua";
@@ -47,6 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.languages.registerCompletionItemProvider(RBXLUA_SELECTOR, new RbxLuaCompletionItemProvider(), '.'));
     context.subscriptions.push(vscode.languages.registerHoverProvider(RBXLUA_SELECTOR, new RbxLuaHoverProvider()));
     context.subscriptions.push(vscode.languages.registerSignatureHelpProvider(RBXLUA_SELECTOR, new RbxLuaSignatureHelpProvider(), '(', ','));
+    context.subscriptions.push(vscode.languages.registerColorProvider(RBXLUA_SELECTOR, new RbxLuaColorProvider()));
 }
 
 // this method is called when your extension is deactivated
