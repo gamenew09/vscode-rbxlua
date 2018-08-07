@@ -1,2 +1,6 @@
 node_modules
 .vsix
+out
+
+api_cache.json
+version_cache.txt

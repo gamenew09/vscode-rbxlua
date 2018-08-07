@@ -1,0 +1,205 @@
+[
+    {
+        "name": "delay",
+        "deprecated": false,
+        "type": "function",
+        "returnType": "void",
+        "documentation": "Schedules a function to be called after delayTime seconds have elapsed.",
+        "arguments": [
+            {
+                "type": "number",
+                "name": "delayTime",
+                "documentation": "The amount of time to wait before calling the callback."
+            },
+            {
+                "type": "function",
+                "name": "callback",
+                "documentation": "The function to call once the delayTime has elapsed."
+            }
+        ]
+    },
+    {
+        "name": "DebuggerManager",
+        "deprecated": true,
+        "type": "function",
+        "returnType": "DebuggerManager",
+        "documentation": "Returns the DebuggerManager class, which acts as an interface for Roblox's Lua debugger feature.",
+        "arguments": []
+    },
+    {
+        "name": "LoadLibrary",
+        "deprecated": true,
+        "type": "function",
+        "returnType": "RbxLibrary",
+        "documentation": "Returns a built-in Roblox library, based on the libraryName specified.\nThere are currently 3 built-in libraries available to use:\n - RbxGui\n - RbxUtility\n - RbxStamper",
+        "arguments": [
+            {
+                "type": "string",
+                "name": "libraryName",
+                "documentation": "The library to load."
+            }
+        ]
+    },
+    {
+        "name": "PluginManager",
+        "deprecated": true,
+        "type": "function",
+        "returnType": "PluginManager",
+        "documentation": "Returns the PluginManager, which can be used to make Plugin objects.\n\n**This function is obsolete in plugins, as the plugin variable is now always declared in scripts that are running plugins.**",
+        "arguments": []
+    },
+    {
+        "name": "printidentity",
+        "deprecated": true,
+        "type": "function",
+        "returnType": "void",
+        "documentation": "Prints the identity level of the current thread to the output.",
+        "arguments": []
+    },
+    {
+        "name": "require",
+        "deprecated": false,
+        "type": "function",
+        "returnType": "Variant",
+        "documentation": "Runs the supplied ModuleScript if it has not been run already, and returns what the ModuleScript returned (in both cases).\n\nIf the ModuleScript the user wants to use has been uploaded to Roblox (with the instance's name being 'MainModule'), it can be loaded by using the require function on the asset ID of the ModuleScript, though only on the server.",
+        "arguments": [
+            {
+                "type": "Variant<ModuleScript, int64>",
+                "name": "module",
+                "documentation": "The ModuleScript object or id to load."
+            }
+        ]
+    },
+    {
+        "name": "settings",
+        "deprecated": false,
+        "type": "function",
+        "returnType": "GlobalSettings",
+        "documentation": "Returns the user's GlobalSettings.\n\n - Changes that are made to any of the settings will not be saved unless the user opens and closes the settings menu in Roblox Studio.",
+        "arguments": []
+    },
+    {
+        "name": "spawn",
+        "deprecated": false,
+        "type": "function",
+        "returnType": "void",
+        "documentation": "Schedules a function to be called in a separate thread in the next task scheduler step.",
+        "arguments": [
+            {
+                "type": "function",
+                "name": "callback",
+                "documentation": "The function that is called in a seperate thread in the next task scheduler step."
+            }
+        ]
+    },
+    {
+        "name": "stats",
+        "deprecated": true,
+        "type": "function",
+        "returnType": "Stats",
+        "documentation": "Returns the Stats service.\n\n - You can also retrieve this service by using GetService on the DataModel.",
+        "arguments": []
+    },
+    {
+        "name": "tick",
+        "deprecated": false,
+        "type": "function",
+        "returnType": "number",
+        "documentation": "Returns the number of seconds that have elapsed since the UNIX epoch (January 1st, 1970), on your computer.\n\n - Unlike standard UNIX time, the value returned from this function also measures milliseconds.",
+        "arguments": []
+    },
+    {
+        "name": "time",
+        "deprecated": false,
+        "type": "function",
+        "returnType": "number",
+        "documentation": "Returns the number of seconds that have elapsed since the game started running.\n\n - The game must be running, or else the value will be 0.",
+        "arguments": []
+    },
+    {
+        "name": "typeof",
+        "deprecated": false,
+        "type": "function",
+        "returnType": "string",
+        "documentation": "Returns a string representing what kind of object was inputted.",
+        "arguments": [
+            {
+                "type": "Variant",
+                "name": "object"
+            }
+        ]
+    },
+    {
+        "name": "UserSettings",
+        "deprecated": false,
+        "type": "function",
+        "returnType": "UserSettings",
+        "documentation": "Returns the client's UserSettings.\n\n - This function should only be used in a LocalScript.",
+        "arguments": []
+    },
+    {
+        "name": "version",
+        "deprecated": false,
+        "type": "function",
+        "returnType": "string",
+        "documentation": "Returns the string value representation of Roblox's version.",
+        "arguments": []
+    },
+    {
+        "name": "wait",
+        "deprecated": false,
+        "type": "function",
+        "returnType": "Tuple<number>",
+        "documentation": "Yields the current thread until the specified amount of seconds have elapsed. If the seconds parameter is not specified, then it yields for a very short period of time (usually close to 1/30th of a second). The function returns 2 values:\n - The actual time that was elapsed\n - The time that has elapsed since the program was started.",
+        "arguments": [
+            {
+                "type": "number",
+                "name": "seconds"
+            }
+        ]
+    },
+    {
+        "name": "warn",
+        "deprecated": false,
+        "type": "function",
+        "returnType": "void",
+        "documentation": "Functions identically to print, except the output is styled as a warning, with yellow text and a timestamp.",
+        "arguments": [
+            {
+                "type": "Tuple<Variant>",
+                "name": "params"
+            }
+        ]
+    },
+
+    {
+        "name": "game",
+        "type": "DataModel",
+        "documentation": "A reference to the DataModel, which is the root class of the parent-child hierarchy on Roblox."
+    },
+    {
+        "name": "Enum",
+        "type": "Enums",
+        "documentation": "A static variable that lets you access all of Roblox's official enums, which are used with various APIs on Roblox."
+    },
+    {
+        "name": "plugin",
+        "type": "Plugin",
+        "documentation": "A variable that is only present when the code is being ran in a plugin. Represents the Plugin object associated with the plugin itself."
+    },
+    {
+        "name": "script",
+        "type": "Variant<Script, LocalScript, ModuleScript>",
+        "documentation": "A variable that is only present when the code is being ran in a plugin. Represents the Plugin object associated with the plugin itself."
+    },
+    {
+        "name": "shared",
+        "type": "table",
+        "documentation": "A table, that is shared with scripts of the same context level. This functions identically to the _G table."
+    },
+    {
+        "name": "workspace",
+        "type": "Workspace",
+        "documentation": "A reference to the Workspace, which is where all physically interactive objects are located. "
+    }
+]

@@ -9,8 +9,13 @@
         "vscode": "^1.19.0"
     },
     "categories": [
-        "Languages"
+        "Programming Languages"
     ],
+    "activationEvents": [
+        "onLanguage:rbxlua",
+        "onCommand:rbxlua.refreshReflectionApi"
+    ],
+    "main": "./out/extension",
     "contributes": {
         "languages": [
             {
@@ -25,12 +30,46 @@
                 "configuration": "./language-configuration.json"
             }
         ],
+        "signatureHelpProvider" : {
+            "triggerCharacters": [ "(" ]
+        },
+        "completionProvider": {
+            "resolveProvider": "true",
+            "triggerCharacters": [
+                ".",
+                ":"
+            ]
+        },
+        "hoverProvider": true,
         "grammars": [
             {
                 "language": "rbxlua",
                 "scopeName": "source.rbxlua",
                 "path": "./syntaxes/rbxlua.tmLanguage.json"
             }
+        ],
+        "commands": [
+            {
+                "command": "rbxlua.refreshReflectionApi",
+                "title": "RbxLua: Refresh Reflection Api"
+            }
         ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "request": "^2.87.0",
+        "request-promise-native": "^1.0.5"
     }
 }
