@@ -65,37 +65,76 @@ export class RbxLuaCompletionItemProvider implements vscode.CompletionItemProvid
             }
             else
             {
-                completionItems = RbxReflection.getGlobalProvider().getGlobals().map((global) => {
-                    let completionItemKind = vscode.CompletionItemKind.Constant;
-                    if(global.Type == "function")
-                    {
-                        completionItemKind = vscode.CompletionItemKind.Function;
-                    }
-                    let completionItem = new vscode.CompletionItem(global.Name, completionItemKind);
-                    
-                    let detail = symbolizeGlobal(global);
-                    if(global.Deprecated)
-                    {
-                        detail = detail.concat(" (Deprecated)")
-                    }
+                let dataTypes = RbxReflection.getGlobalProvider().getDatatypes();
 
-                    completionItem.detail = detail;
-                    completionItem.insertText = global.Name;
-                    completionItem.documentation = new vscode.MarkdownString(global.Documentation);
-                    return completionItem;
+                let filteredDTs = dataTypes.filter((val) => {
+                    return word.startsWith(val.Name + ".");
                 });
 
-                LUA_KEYWORDS.forEach((keyword) => {
-                    let completionItem = new vscode.CompletionItem(keyword, vscode.CompletionItemKind.Keyword);
-                    completionItem.insertText = keyword;
-                    completionItems.push(completionItem);
-                });
-
-                LUA_CONSTS.forEach((constantName) => {
-                    let completionItem = new vscode.CompletionItem(constantName, vscode.CompletionItemKind.Constant);
-                    completionItem.insertText = constantName;
-                    completionItems.push(completionItem);
-                });
+                if(filteredDTs != null && filteredDTs.length > 0)
+                {
+                    completionItems = filteredDTs[0].Globals.map((global) => {
+                        let completionItemKind = vscode.CompletionItemKind.Constant;
+                        if(global.Type == "function")
+                        {
+                            completionItemKind = vscode.CompletionItemKind.Function;
+                        }
+                        let completionItem = new vscode.CompletionItem(global.Name, completionItemKind);
+                        
+                        let detail = symbolizeGlobal(global, filteredDTs[0].Name, false);
+                        if(global.Deprecated)
+                        {
+                            detail = detail.concat(" (Deprecated)")
+                        }
+    
+                        completionItem.detail = detail;
+                        completionItem.insertText = global.Name;
+                        completionItem.documentation = new vscode.MarkdownString(global.Documentation);
+                        return completionItem;
+                    });
+                }
+                else
+                {
+                    completionItems = RbxReflection.getGlobalProvider().getGlobals().map((global) => {
+                        let completionItemKind = vscode.CompletionItemKind.Constant;
+                        if(global.Type == "function")
+                        {
+                            completionItemKind = vscode.CompletionItemKind.Function;
+                        }
+                        let completionItem = new vscode.CompletionItem(global.Name, completionItemKind);
+                        
+                        let detail = symbolizeGlobal(global);
+                        if(global.Deprecated)
+                        {
+                            detail = detail.concat(" (Deprecated)")
+                        }
+    
+                        completionItem.detail = detail;
+                        completionItem.insertText = global.Name;
+                        completionItem.documentation = new vscode.MarkdownString(global.Documentation);
+                        return completionItem;
+                    }).concat(dataTypes.map((dataType) => {
+                        let completionItem = new vscode.CompletionItem(dataType.Name, vscode.CompletionItemKind.Class);
+                        completionItem.insertText = dataType.Name;
+                        if(dataType.Documentation)
+                        {
+                            completionItem.documentation = dataType.Documentation;
+                        }
+                        return completionItem;
+                    }));
+    
+                    LUA_KEYWORDS.forEach((keyword) => {
+                        let completionItem = new vscode.CompletionItem(keyword, vscode.CompletionItemKind.Keyword);
+                        completionItem.insertText = keyword;
+                        completionItems.push(completionItem);
+                    });
+    
+                    LUA_CONSTS.forEach((constantName) => {
+                        let completionItem = new vscode.CompletionItem(constantName, vscode.CompletionItemKind.Constant);
+                        completionItem.insertText = constantName;
+                        completionItems.push(completionItem);
+                    });
+                }
             }
 
             resolve(completionItems);

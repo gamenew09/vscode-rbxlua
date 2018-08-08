@@ -1,0 +1,86 @@
+{
+    "documentation": "A real-valued RGB color tuple, with elements ranging from [0,1]. The Color3 data type is often used in setting the colors of objects that aren't related to bricks, such as GUIs, Sparkles, etc. ",
+    "members":[
+        {
+            "name": "new",
+            "deprecated": false,
+            "type": "function",
+            "returnType": "Color3",
+            "documentation": "Creates a new Color3 using RGB values between 0 and 1.",
+            "arguments": [
+                {
+                    "type": "number",
+                    "name": "r",
+                    "default": 0,
+                    "documentation": "The red channel of the color. This value should be between 0 and 1."
+                },
+                {
+                    "type": "number",
+                    "name": "g",
+                    "default": 0,
+                    "documentation": "The green channel of the color. This value should be between 0 and 1."
+                },
+                {
+                    "type": "number",
+                    "name": "b",
+                    "default": 0,
+                    "documentation": "The blue channel of the color. This value should be between 0 and 1."
+                }
+            ]
+        },
+        {
+            "name": "fromHSV",
+            "deprecated": false,
+            "type": "function",
+            "returnType": "Color3",
+            "documentation": "Creates a new Color3 using HSV values from 0 to 1.",
+            "arguments": [
+                {
+                    "type": "number",
+                    "name": "r",
+                    "default": 0,
+                    "documentation": "The red channel of the color. This value should be between 0 and 1."
+                },
+                {
+                    "type": "number",
+                    "name": "g",
+                    "default": 0,
+                    "documentation": "The green channel of the color. This value should be between 0 and 1."
+                },
+                {
+                    "type": "number",
+                    "name": "b",
+                    "default": 0,
+                    "documentation": "The blue channel of the color. This value should be between 0 and 1."
+                }
+            ]
+        },
+        {
+            "name": "fromRGB",
+            "deprecated": false,
+            "type": "function",
+            "returnType": "Color3",
+            "documentation": "Creates a new Color3 using RGB integer values between 0 and 255.",
+            "arguments": [
+                {
+                    "type": "int",
+                    "name": "r",
+                    "default": 0,
+                    "documentation": "The red channel of the color. This value should be between 0 and 255."
+                },
+                {
+                    "type": "int",
+                    "name": "g",
+                    "default": 0,
+                    "documentation": "The green channel of the color. This value should be between 0 and 255."
+                },
+                {
+                    "type": "int",
+                    "name": "b",
+                    "default": 0,
+                    "documentation": "The blue channel of the color. This value should be between 0 and 255."
+                }
+            ]
+        }
+    ]
+}

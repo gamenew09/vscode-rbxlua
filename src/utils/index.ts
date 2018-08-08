@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { RbxGlobalItem } from '../robloxglobalsprovider';
 
-export function symbolizeGlobal(global: RbxGlobalItem)
+export function symbolizeGlobal(global: RbxGlobalItem, className?: string, useColonInClassName: boolean = false): string
 {
     if(global.Type == "function")
     {
@@ -10,14 +10,14 @@ export function symbolizeGlobal(global: RbxGlobalItem)
         let params = "";
 
         global.Arguments.forEach((arg) => {
-            params = params.concat(arg.Type + " " + arg.Name + ", ");
+            params = params.concat(arg.Type + " " + arg.Name + (arg.Default != null ? " = ".concat(arg.Default.toString()) : "") + ", ");
         });
 
         params = params.substr(0, params.length - 2);
 
         let deprecated = global.Deprecated;
 
-        return global.ReturnType + " " + funcName + "(" + params + ")";
+        return global.ReturnType + " " + (className != null ? className + (useColonInClassName ? ":" : ".") : "") + funcName + "(" + params + ")";
     }
     else
     {

@@ -31,6 +31,11 @@ export function activate(context: vscode.ExtensionContext) {
     // Grab the globals defined in the extension.
     RbxReflection.getGlobalProvider().grabGlobalFunctionsFrom(extensionPath + "/globals.json").then(() => {
         vscode.window.showInformationMessage("Loaded Roblox Globals data!");
+        RbxReflection.getGlobalProvider().grabDatatypesFromFolder(extensionPath + "/datatypes").then(() => {
+            vscode.window.showInformationMessage("Loaded Roblox Datatypes data!");
+        }, (err) => {
+            vscode.window.showErrorMessage(err);
+        });
     }, (err) => {
         vscode.window.showErrorMessage(err);
     });
